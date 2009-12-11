@@ -18,6 +18,7 @@ from enthought.traits.ui.file_dialog import open_file
 from image import Image
 
 def load_image():
+    """Handler for File > Open menu"""
     file_name = File
     file_name = open_file()
     if file_name != '':
@@ -37,13 +38,10 @@ class Crosshairs(BaseTool):
 
     def normal_left_down(self, event):
         self.event_state = 'mousedown'
-        #print 'normal_left_down:', event.x, event.y
 
         for olay in self.component.overlays:
             # Set initial position of the CursorTool if there is one.
-            #print 'olay:', olay
             if hasattr(olay, 'current_position'):
-                #print 'current_position!'
                 x, y = self.map_data(event)
                 olay.current_position = x, y
         event.handled = True
@@ -51,10 +49,8 @@ class Crosshairs(BaseTool):
     def mousedown_mouse_move(self, event):
         # XXX this func unnecessary as the CursorTool sets position
         x, y = self.map_data(event)
-        #print 'mousedown_mouse_move', x, y
 
     def mousedown_left_up(self, event):
-        #print 'mousedown_left_up'
         self.event_state = "normal"
         event.handled = True
 
@@ -83,6 +79,7 @@ class SlicePlot(Plot):
     def __init__(self, data, **kwtraits):
         super(SlicePlot, self).__init__(data, **kwtraits)
         self.voxel = kwtraits.get('voxel') # XXX what to set for default?
+        self.aspect_ratio = 1.0
 
     def set_slice(self, name):
         self.renderer = self.img_plot(name, hide_grids=False, 
@@ -106,17 +103,10 @@ class SlicePlot(Plot):
     def _index_changed(self, name, old, new):
         # Event handler, triggered when mouse left down event happens
         # in plot.
-
-        #print '_index_changed:', name, old, new
-        #print self.slicename, '._index_changed'
         self.cursor.current_position = self.xindex, self.yindex
 
     def _cursor_pos_changed(self, name, old, new):
         self.xindex, self.yindex = self.cursor_pos
-        #print self.slicename, '._cursor_pos_changed:', self.xindex, self.yindex
-        #print 'cursor_pos (%d, %d)' % (x, y)
-        #print 'voxel:', self.voxel.get('x', 'y', 'z')
-        #print 'intensity:', self.data[y,x]
 
     def redraw(self):
         """Redraw the plot."""
