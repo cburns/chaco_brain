@@ -1,22 +1,18 @@
 
-from enthought.chaco.api import (ArrayPlotData, Plot, gray, GridContainer,
-                                 OverlayPlotContainer, GridDataSource, 
-                                 HPlotContainer)
+from enthought.chaco.api import ArrayPlotData, Plot, GridContainer
 from enthought.enable.component_editor import ComponentEditor
 from enthought.traits.api import (HasTraits, Instance, DelegatesTo, 
-                                  on_trait_change, Enum, Array, Int, Str,
-                                  Color, List, Trait, Callable, Dict)
+                                  on_trait_change, Enum, Int,
+                                  Trait, Callable)
 from enthought.traits.ui.api import (Item, View, Menu, MenuBar, Action,
                                      OKButton, CancelButton)
 from enthought.chaco.tools.cursor_tool import CursorTool, BaseCursorTool
 import enthought.chaco.default_colormaps as chaco_colormaps
 from enthought.enable.api import BaseTool
-from enthought.chaco.tools.api import LineInspector
 
 
 # File IO imports
-from enthought.traits.api import File, Button
-from enthought.traits.ui.api import HGroup
+from enthought.traits.api import File
 from enthought.traits.ui.file_dialog import open_file
 
 from image import Image
