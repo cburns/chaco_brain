@@ -4,8 +4,9 @@ from enthought.enable.component_editor import ComponentEditor
 from enthought.traits.api import (HasTraits, Instance, DelegatesTo, 
                                   on_trait_change, Enum, Int,
                                   Trait, Callable)
-from enthought.traits.ui.api import (Item, View, Menu, MenuBar, Action,
-                                     OKButton, CancelButton)
+from enthought.traits.ui.api import (Item, View) 
+from enthought.traits.ui.menu import (Menu, MenuBar, Action, OKButton, 
+                                      CancelButton)
 from enthought.chaco.tools.cursor_tool import CursorTool, BaseCursorTool
 import enthought.chaco.default_colormaps as chaco_colormaps
 from enthought.enable.api import BaseTool
