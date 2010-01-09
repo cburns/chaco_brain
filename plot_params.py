@@ -23,20 +23,29 @@ PARAM_DTYPE = [('rot', [('x', 'f4'), ('y', 'f4'), ('z', 'f4')]),
 
 
 class MovementParamPlot(traits.HasTraits):
-    rot_plot = traits.Instance(chaco.Plot)
-    trans_plot = traits.Instance(chaco.Plot)
+    # "Internal" attributes
     data = traits.DictStrAny(value_trait=chaco.ArrayPlotData)
     zoom = traits.Instance(tools.ZoomTool)
     pan = traits.Instance(tools.PanTool)
+    # Would be nice to actually make this a list of files - but maybe not here,
+    # as we may want to load the file-names from a canned report datasource
+    # (i.e. the original files may not be present)
+    file_list = traits.List(trait=traits.Str)
+    
+    # Attributes in the view
+    rot_plot = traits.Instance(chaco.Plot)
+    trans_plot = traits.Instance(chaco.Plot)
     # It'd be nice to split out the notion of which subject is selected, so that
     # this plot can simply take a given set of data
     max_params = traits.Int(0)
     params_num = traits.Range(0, 'max_params') 
+    file_name = traits.Str('file_name not set')
 
     traits_view = ui.View( 
                     ui.Item('params_num', label="Scan Number",
                             editor=ui.RangeEditor(mode='spinner',
                                                   high_name='max_params') ),
+                    ui.Item('file_name', label='File', style='readonly'),
                     ui.Item('rot_plot', label='Rotation', 
                             editor=ComponentEditor(height=300)),
                     ui.Item('trans_plot', label='Translation', 
@@ -47,15 +56,16 @@ class MovementParamPlot(traits.HasTraits):
                     title="Movement parameters"
                   )
     
-    def __init__(self, params):
+    def __init__(self, fnames, params):
         '''params: a list of numpy arrays'''
         super(MovementParamPlot, self).__init__()
 
+        self.file_list = fnames
+        self.file_name = fnames[0]
         self.params_num = 0
         self.max_params = len(params) - 1
 
         self.params = params
-
 
         # XXX - the following info should go (soon) into 
         # nipype.interfaces.fsl.McFLIRT
@@ -63,6 +73,7 @@ class MovementParamPlot(traits.HasTraits):
         self.rot_plot = self.create_line_plot('rot', 'radians (clockwise)',
                                               self.trans_plot.index_range)
 
+        # Note - it doesn't matter which plot you use to init the tools
         self.zoom = tools.ZoomTool(self.trans_plot, tool_mode='range', 
                                    axis='index')
         self.pan = tools.PanTool(self.rot_plot, constrain=True,
@@ -109,6 +120,8 @@ class MovementParamPlot(traits.HasTraits):
             n = self.params_num
         else:
             self.params_num = n
+        
+        self.file_name = self.file_list[n]
 
         params = self.params[n]
         for name in params.dtype.names:
@@ -158,7 +171,7 @@ def main(fnames, verbose=False, plot=True):
     for fname in fnames:
         params.append(np.recfromtxt(fname, dtype=PARAM_DTYPE))
 
-    plot_obj = MovementParamPlot(params)
+    plot_obj = MovementParamPlot(fnames, params)
     plot_obj.configure_traits()
     return plot_obj
 
