@@ -38,10 +38,11 @@ class MovementParamPlot(traits.HasTraits):
                             editor=ui.RangeEditor(mode='spinner',
                                                   high_name='max_params') ),
                     ui.Item('rot_plot', label='Rotation', 
-                            editor=ComponentEditor()),
+                            editor=ComponentEditor(height=300)),
                     ui.Item('trans_plot', label='Translation', 
-                            editor=ComponentEditor()),
-                    # width=550, height=550, 
+                            editor=ComponentEditor(height=300)),
+                    # width=550, 
+                    # height=750, 
                     resizable=True, 
                     title="Movement parameters"
                   )
@@ -88,12 +89,12 @@ class MovementParamPlot(traits.HasTraits):
         plot.value_axis.title = units
         # Our left axis labels are a bit large
         plot.padding = [70, 50, 20, 50]
-        # plot.tools.extend((self.zoom, self.pan))
+        # might be clearer to write:
+        # plot.padding_top = 20
+        # plot.padding_left = 70
 
-        # legend = chaco.Legend(component=plot, padding=10, align="ur")
         plot.legend.tools.append(
                 tools.LegendTool(plot.legend, drag_button="right") )
-        # plot.overlays.append(legend)
         plot.legend.labels = list(axes)
         plot.legend.visible = True
 
