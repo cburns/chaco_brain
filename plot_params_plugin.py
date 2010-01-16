@@ -15,13 +15,17 @@ class MovementParamPlugin(Plugin):
 
     # Little unclear on the whole ServiceOffer things. Need to search
     # for more documentation.
-    service_offers = List(contributes_to='nipy.viz.service_offers')
+    service_offers = List(contributes_to='enthought.envisage.service_offers')
     
     def _service_offers_default(self):
         movement_params_service_offer = ServiceOffer(
             protocol = 'plot_params.MovementParamPlot',
-            factory = 'plot_params.MovementParamPlot',
+            #factory = 'plot_params.MovementParamPlot',
+            factory = self._create_movement_params_service
             )
         return [movement_params_service_offer]
 
-
+    def _create_movement_params_service(self):
+        from plot_params import MovementParamPlot
+        1/0
+        return MovementParamPlot()
