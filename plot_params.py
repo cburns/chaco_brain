@@ -41,10 +41,6 @@ class MovementParamPlot(traits.HasTraits):
     params_num = traits.Range(0, 'max_params') 
     file_name = traits.Str('file_name not set')
 
-    print '*'*80
-    print 'MovementParamPlot class'
-    1/0
-
     """
     traits_view = ui.View( 
                     ui.Item('params_num', label="Scan Number",
@@ -77,10 +73,6 @@ class MovementParamPlot(traits.HasTraits):
         self.max_params = len(params) - 1
 
         self.params = params
-
-        print '*'*80
-        print 'plot_params, file_name:', self.file_name
-        1/0
 
         # XXX - the following info should go (soon) into 
         # nipype.interfaces.fsl.McFLIRT

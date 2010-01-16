@@ -1,7 +1,7 @@
 """The plugin component for plot_params."""
 
 from enthought.envisage.api import Plugin, ServiceOffer
-from enthought.traits.api import List
+from enthought.traits.api import List, on_trait_change
 
 class MovementParamPlugin(Plugin):
     """The Movement Parameter Plugin.
@@ -27,5 +27,10 @@ class MovementParamPlugin(Plugin):
 
     def _create_movement_params_service(self):
         from plot_params import MovementParamPlot
-        1/0
         return MovementParamPlot()
+
+    @on_trait_change('application:started')
+    def _plot_movement_params(self):
+        from plot_params import MovementParamPlot
+        plt_prms = self.application.get_service(MovementParamPlot)
+        return
