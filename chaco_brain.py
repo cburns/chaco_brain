@@ -9,6 +9,7 @@ from enthought.envisage.core_plugin import CorePlugin
 from enthought.envisage.ui.workbench.workbench_plugin import WorkbenchPlugin
 
 from chaco_brain_app import ChacoBrainApplication
+from plot_params_plugin import MovementParamPlugin
 
 # Logging
 logger = logging.getLogger()
@@ -18,7 +19,7 @@ logger.setLevel(logging.DEBUG)
 
 def main():
     chaco_brain_app = ChacoBrainApplication(
-        plugins = [CorePlugin(), WorkbenchPlugin()]
+        plugins = [CorePlugin(), WorkbenchPlugin(), MovementParamPlugin()]
         )
 
     chaco_brain_app.run()
