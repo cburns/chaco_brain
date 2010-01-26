@@ -41,7 +41,6 @@ class MovementParamPlot(traits.HasTraits):
     params_num = traits.Range(0, 'max_params') 
     file_name = traits.Str('file_name not set')
 
-    """
     traits_view = ui.View( 
                     ui.Item('params_num', label="Scan Number",
                             editor=ui.RangeEditor(mode='spinner',
@@ -56,7 +55,6 @@ class MovementParamPlot(traits.HasTraits):
                     resizable=True, 
                     title="Movement parameters"
                   )
-                  """
 
     def __init__(self, fnames=None, params=None):
         '''params: a list of numpy arrays'''
