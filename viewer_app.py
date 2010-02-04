@@ -5,7 +5,7 @@ from enthought.envisage.core_plugin import CorePlugin
 from enthought.envisage.ui.workbench.workbench_plugin import WorkbenchPlugin
 from enthought.envisage.ui.workbench.api import WorkbenchApplication
 
-from slice_view_plugin import SliceViewPlugin
+from slice_view_plugin import SliceViewUIPlugin, SliceViewPlugin
 
 # Logging
 logger = logging.getLogger()
@@ -20,6 +20,7 @@ class ChacoViewer(WorkbenchApplication):
 def main():
     chaco_brain_app = ChacoViewer(
         plugins = [CorePlugin(), WorkbenchPlugin(), SliceViewPlugin(),
+                   SliceViewUIPlugin(),
                    ]
         )
 
