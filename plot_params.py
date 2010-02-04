@@ -15,8 +15,9 @@ import enthought.traits.ui.api as ui
 import enthought.chaco.api as chaco
 import enthought.chaco.tools.api as tools
 
-PARAM_DTYPE = [('rot', [('x', 'f4'), ('y', 'f4'), ('z', 'f4')]), 
-               ('trans', [('x', 'f4'), ('y', 'f4'), ('z', 'f4')])]
+PARAM_DTYPE = [('trans', [('x', 'f4'), ('y', 'f4'), ('z', 'f4')]), 
+               ('rot', [('pitch', 'f4'), ('roll', 'f4'), ('yaw', 'f4')])]
+SPM_COLORS = ['blue', 'green', 'red']
 
 # cmap = chaco.Spectral(chaco.DataRange1D(low=0, high=5))
 # COLOR_PALETTE = cmap.color_bands
@@ -97,9 +98,9 @@ class MovementParamPlot(traits.HasTraits):
 
         xyz = self.params[0][name]
         axes = xyz.dtype.names
-        for axis in axes:
+        for i, axis in enumerate(axes):
             data.set_data(axis, xyz[axis])
-            plot.plot(axis, color='auto')
+            plot.plot(axis, color = SPM_COLORS[i])
 
         plot.index_axis.title = 'Slice Number'
         plot.value_axis.title = units
